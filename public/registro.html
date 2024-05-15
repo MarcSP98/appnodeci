@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/public/js/main.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Agregar Usuario</h1>
+    <form id="userForm" onsubmit="addUser(event)">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" required><br>
+        
+        <label for="surname">Apellido:</label>
+        <input type="text" id="surname" required><br>
+
+        <label for="email">ID del Estudiante:</label>
+        <input type="text" id="email" required><br>
+        
+        <button type="submit">Registrar</button>
+    </form>
+
+    <form action="/public/index.html">
+        <button type="submit">Regresar a inicio</button>
+    </form>
+</body>
+</html>
