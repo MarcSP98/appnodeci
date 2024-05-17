@@ -2,10 +2,10 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const app = express()
-const port = process.env.PORT || 3000
+const port = 3000
 
 // URL de conexión a la base de datos
-const mongoURI = 'mongodb://127.0.0.1:27017/People'
+const mongoURI = process.env.MONGODB_URI 
 
 // Conexión a la base de datos
 mongoose.connect(mongoURI)
