@@ -20,6 +20,8 @@ app.use(express.json())
 
 app.use(cors())
 
+app.use(express.static(path.join(__dirname, 'public')))
+
 // Rutas
 app.use('/users', usersRouter)
 
