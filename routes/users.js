@@ -6,7 +6,7 @@ const User = require('../models/users')
 app.use(express.json())
 
 // Ruta principal para servir el archivo HTML desde la carpeta public
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
