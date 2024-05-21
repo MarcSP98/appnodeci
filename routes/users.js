@@ -5,6 +5,10 @@ const User = require('../models/users')
 // Middleware para analizar el cuerpo de la solicitud como JSON
 app.use(express.json())
 
+// Ruta principal para servir el archivo HTML desde la carpeta public
+router.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public', 'index.html'));
+});
 
 // Ruta para manejar las solicitudes GET para buscar estudiantes
 app.get('/searchUserByEmail', async (req, res) => {
