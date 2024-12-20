@@ -23,8 +23,8 @@ app.use(express.json());
 app.use(cors());
 
 // Middleware para servir archivos estáticos desde la carpeta 'public'
-app.use(express.static(path.join(__dirname, 'public')));
-
+//app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static('public'));
 // Rutas
 app.use('/users', usersRouter);
 
