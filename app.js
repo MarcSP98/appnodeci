@@ -21,7 +21,11 @@ const usersRouter = require('./routes/users');
 app.use(express.json());
 
 // Middleware para permitir peticiones desde otros orígenes
-app.use(cors());
+app.use(cors({
+    origin: '*', // Cambiar a un origen específico en producción para mayor seguridad
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
+}));
 
 // Middleware para servir archivos estáticos desde la carpeta 'public'
 app.use('/public', express.static(path.join(__dirname, 'public')));
