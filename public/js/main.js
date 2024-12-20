@@ -1,32 +1,28 @@
-const BASE_URL = window.location.origin; // Usará automáticamente la URL del servidor en producción
-
 async function addUser(event) {
     event.preventDefault();
     const name = document.getElementById("name").value;
     const surname = document.getElementById("surname").value;
     const email = document.getElementById("email").value;
 
-    const newUser = new User(name, surname, email);
-
-    document.getElementById("userForm").reset();
+    const newUser = { name, surname, email }; // Objeto simple
 
     try {
-        const response = await fetch(`${BASE_URL}/users/addUser`, {
+        const response = await fetch('/users/addUser', { // Asegúrate de que esta ruta es válida
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newUser)
+            body: JSON.stringify(newUser),
         });
 
-        if (response.ok) {
-            const result = await response.json();
-            console.log(result);
-        } else {
-            console.error('Error adding user:', response.status, response.statusText);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
         }
+
+        const result = await response.json();
+        console.log('Usuario agregado:', result);
     } catch (error) {
-        console.error('Error adding user:', error.message);
+        console.error('Error al agregar usuario:', error);
     }
 }
 

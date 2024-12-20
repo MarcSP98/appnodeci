@@ -10,17 +10,12 @@
 
     <h1>MUAAAAAAA</h1>
     <form id="userForm" onsubmit="addUser(event)">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" required><br>
-        
-        <label for="surname">Apellido:</label>
-        <input type="text" id="surname" required><br>
-
-        <label for="email">ID del Estudiante:</label>
-        <input type="text" id="email" required><br>
-        
+        <input id="name" type="text" placeholder="Nombre" required>
+        <input id="surname" type="text" placeholder="Apellido" required>
+        <input id="email" type="email" placeholder="Correo Electrónico" required>
         <button type="submit">Registrar</button>
     </form>
+    <script src="/public/js/main.js"></script>
 
     <form action="/public/index.html">
         <button type="submit">Regresar a inicio</button>
