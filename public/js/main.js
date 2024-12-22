@@ -7,7 +7,7 @@ class User {
 }
 
 // Define la URL base según el entorno (local o Heroku)
-const BASE_URL = window.location.origin; // Detecta automáticamente la URL base
+const BASE_URL = window.location.origin || 'mongodb+srv://msp98msp:mspolot98@my-cluster.ozuqhwl.mongodb.net/?retryWrites=true&w=majority&appName=my-cluster'; // Detecta automáticamente la URL base
 
 async function addUser(event) {
     event.preventDefault();
