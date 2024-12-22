@@ -7,7 +7,8 @@ class User {
 }
 
 // Define la URL base según el entorno (local o Heroku)
-const BASE_URL = 'mongodb+srv://msp98msp:mspolot98@my-cluster.ozuqhwl.mongodb.net/?retryWrites=true&w=majority&appName=my-cluster'; // Detecta automáticamente la URL base
+// MongoDB no es directamente accesible desde un navegador; necesitas un servidor backend para conectar.
+const BASE_URL = 'https://appnodedeploy-ee314911a96d.herokuapp.com'; // Usa la URL de tu servidor Heroku
 
 async function addUser(event) {
     event.preventDefault();
@@ -25,7 +26,8 @@ async function addUser(event) {
     const newUser = new User(name, surname, email);
 
     try {
-        const response = await fetch(`${BASE_URL}/users/addUser`, { // URL dinámica
+        // Enviar los datos al backend
+        const response = await fetch(`${BASE_URL}/users/addUser`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,7 +36,8 @@ async function addUser(event) {
         });
 
         if (!response.ok) {
-            throw new Error(`Error: ${response.status}`);
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message || `Error: ${response.status}`);
         }
 
         const result = await response.json();
@@ -43,7 +46,7 @@ async function addUser(event) {
         document.getElementById("userForm").reset();
     } catch (error) {
         console.error('Error al agregar usuario:', error);
-        alert('Error al agregar el usuario. Revisa la consola para más detalles.');
+        alert(`Error al agregar el usuario: ${error.message}`);
     }
 }
 
@@ -58,10 +61,12 @@ async function searchUserByEmail(event) {
     }
 
     try {
-        const response = await fetch(`${BASE_URL}/users/searchUserByEmail?userEmail=${userEmail}`);
+        // Buscar usuario en el backend
+        const response = await fetch(`${BASE_URL}/users/searchUserByEmail?userEmail=${encodeURIComponent(userEmail)}`);
 
         if (!response.ok) {
-            throw new Error(`Error: ${response.status}`);
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message || `Error: ${response.status}`);
         }
 
         const userData = await response.json();
@@ -74,6 +79,6 @@ async function searchUserByEmail(event) {
         infoElement.innerHTML = formattedInfo;
     } catch (err) {
         console.error('Error al buscar usuario:', err);
-        alert('Error al buscar usuario. Revisa la consola para más detalles.');
+        alert(`Error al buscar usuario: ${err.message}`);
     }
 }

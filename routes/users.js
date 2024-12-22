@@ -1,7 +1,6 @@
 const express = require('express');
-const User = require('../models/users');
-const path = require('path'); // Importar path si es necesario para archivos estáticos
-
+const path = require('path'); // Importar 'path' para manejar rutas de archivos
+const User = require('../models/users'); // Modelo de usuario
 const router = express.Router();
 
 // Middleware para analizar el cuerpo de la solicitud como JSON
@@ -9,23 +8,34 @@ router.use(express.json());
 
 // Ruta principal para servir el archivo HTML desde la carpeta public
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'index.html'));
+    try {
+        res.sendFile(path.join(__dirname, '../public', 'index.html')); // Servir el archivo HTML
+    } catch (err) {
+        console.error('Error al servir el archivo HTML:', err);
+        res.status(500).json({ message: 'Error al cargar la página' });
+    }
 });
 
 // Ruta para manejar las solicitudes GET para buscar usuarios por email
 router.get('/searchUserByEmail', async (req, res) => {
     try {
-        const userEmail = req.query.userEmail; // Obtener el email del usuario
+        const { userEmail } = req.query; // Obtener el email del usuario
+
+        // Validar que el parámetro userEmail exista
+        if (!userEmail) {
+            return res.status(400).json({ message: 'Email es obligatorio' });
+        }
+
         const user = await User.findOne({ email: userEmail }); // Buscar usuario en la BD
 
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
         res.status(200).json(user); // Responder con el usuario encontrado
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error searching for user' });
+        console.error('Error al buscar usuario:', err);
+        res.status(500).json({ message: 'Error interno del servidor' });
     }
 });
 
@@ -34,30 +44,35 @@ router.post('/addUser', async (req, res) => {
     try {
         const { name, surname, email } = req.body;
 
+        // Validar que todos los campos requeridos estén presentes
         if (!name || !surname || !email) {
-            return res.status(400).json({ message: 'Missing required fields' });
+            return res.status(400).json({ message: 'Faltan campos obligatorios' });
         }
 
-        const existingUser = await User.findOne({ email }); // Verificar si el email ya existe
+        // Verificar si el email ya existe
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ message: 'Email already in use' });
+            return res.status(400).json({ message: 'El email ya está en uso' });
         }
 
+        // Crear y guardar el nuevo usuario
         const newUser = new User({ name, surname, email });
-        const userSaved = await newUser.save(); // Guardar usuario en la BD
+        const userSaved = await newUser.save();
 
-        res.status(200).json({
-            message: 'User saved successfully',
+        res.status(201).json({
+            message: 'Usuario guardado exitosamente',
             user: userSaved
         });
     } catch (err) {
-        console.error(err);
+        console.error('Error al guardar usuario:', err);
+
+        // Manejar errores de validación específicos
         if (err.name === 'ValidationError') {
             return res.status(400).json({ message: err.message });
         }
-        res.status(500).json({ message: 'Database error' });
+
+        res.status(500).json({ message: 'Error en la base de datos' });
     }
 });
 
 module.exports = router;
-
