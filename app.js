@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // URL de conexión a la base de datos
-const mongoURI = 'mongodb+srv://msp98msp:mspolot98@my-cluster.ozuqhwl.mongodb.net/?retryWrites=true&w=majority&appName=my-cluster' || process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/People';
+const mongoURI = 'mongodb+srv://msp98msp:mspolot98@my-cluster.ozuqhwl.mongodb.net/?retryWrites=true&w=majority&appName=my-cluster' //|| process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/People';
 
 // Conexión a la base de datos
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
