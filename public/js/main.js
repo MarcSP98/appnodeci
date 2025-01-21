@@ -1,3 +1,5 @@
+const BASE_URL = 'http://localhost:3000'
+
 class User {
     constructor(name, surname, email) {
         this.name = name;
@@ -5,10 +7,6 @@ class User {
         this.email = email;
     }
 }
-
-// Define la URL base según el entorno (local o Heroku)
-// MongoDB no es directamente accesible desde un navegador; necesitas un servidor backend para conectar.
-const BASE_URL = process.env.MONGODB_URI // Usa la URL de tu servidor Heroku
 
 async function addUser(event) {
     event.preventDefault();
@@ -26,7 +24,7 @@ async function addUser(event) {
     const newUser = new User(name, surname, email);
 
     try {
-        // Enviar los datos al backend
+        // Aquí estás utilizando BASE_URL que ya ha sido importada correctamente
         const response = await fetch(`${BASE_URL}/users/addUser`, {
             method: 'POST',
             headers: {
@@ -61,7 +59,7 @@ async function searchUserByEmail(event) {
     }
 
     try {
-        // Buscar usuario en el backend
+        // Asegúrate de que BASE_URL ya esté inicializada antes de ser utilizada
         const response = await fetch(`${BASE_URL}/users/searchUserByEmail?userEmail=${encodeURIComponent(userEmail)}`);
 
         if (!response.ok) {

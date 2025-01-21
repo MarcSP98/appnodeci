@@ -4,7 +4,7 @@ const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const BASE_URL = process.env.MONGODB_URI;
+const BASE_URL = process.env.MONGODB_URI || "mongodb+srv://msp98msp:mspolot98@my-cluster.ozuqhwl.mongodb.net/?retryWrites=true&w=majority&appName=my-cluster"
 
 // Verifica si la variable MONGODB_URI está configurada
 if (!BASE_URL) {
