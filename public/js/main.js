@@ -8,7 +8,7 @@ class User {
 
 // Define la URL base según el entorno (local o Heroku)
 // MongoDB no es directamente accesible desde un navegador; necesitas un servidor backend para conectar.
-const BASE_URL = process.env.MONGODB_URI; // Usa la URL de tu servidor Heroku
+const BASE_URL = process.env.MONGODB_URI // Usa la URL de tu servidor Heroku
 
 async function addUser(event) {
     event.preventDefault();
