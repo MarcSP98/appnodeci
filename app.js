@@ -1,26 +1,33 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
-
 const app = express();
+
+// Puerto del servidor
 const port = process.env.PORT || 3000;
-const BASE_URL = process.env.MONGODB_URI || "mongodb+srv://msp98msp:mspolot98@my-cluster.ozuqhwl.mongodb.net/?retryWrites=true&w=majority&appName=my-cluster"
+
+// URL de conexión a MongoDB Atlas, usando variable de entorno MONGODB_URI si está configurada
+const MONGO_URI = process.env.MONGODB_URI || "mongodb+srv://msp98msp:mspolot98@my-cluster.ozuqhwl.mongodb.net/myDatabase?retryWrites=true&w=majority&appName=my-cluster";
+
+// Middleware CORS
+app.use(cors());
 
 // Verifica si la variable MONGODB_URI está configurada
-if (!BASE_URL) {
+if (!MONGO_URI) {
     console.error('Error: La variable de entorno MONGODB_URI no está configurada.');
     process.exit(1); // Finaliza el proceso si no está configurada
 }
 
 // Conexión a MongoDB Atlas
-mongoose.connect(BASE_URL)
+mongoose.connect(MONGO_URI)
     .then(() => console.log('Conectado a MongoDB Atlas'))
     .catch(err => {
         console.error('Error al conectar a MongoDB:', err);
-        process.exit(1);
+        process.exit(1); // Finaliza el proceso si no se puede conectar
     });
 
-// Middleware
+// Middleware para manejar datos JSON
 app.use(express.json());
 
 // Servir archivos estáticos
