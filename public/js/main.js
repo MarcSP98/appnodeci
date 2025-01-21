@@ -1,5 +1,4 @@
-const BASE_URL = 'http://localhost:3000'
-
+const API_URL = 'http://localhost:3000' || 'https://appnodedeploy-ee314911a96d.herokuapp.com'
 class User {
     constructor(name, surname, email) {
         this.name = name;
@@ -25,7 +24,7 @@ async function addUser(event) {
 
     try {
         // Aquí estás utilizando BASE_URL que ya ha sido importada correctamente
-        const response = await fetch(`${BASE_URL}/users/addUser`, {
+        const response = await fetch(`${API_URL}/users/addUser`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -60,7 +59,7 @@ async function searchUserByEmail(event) {
 
     try {
         // Asegúrate de que BASE_URL ya esté inicializada antes de ser utilizada
-        const response = await fetch(`${BASE_URL}/users/searchUserByEmail?userEmail=${encodeURIComponent(userEmail)}`);
+        const response = await fetch(`${API_URL}/users/searchUserByEmail?userEmail=${encodeURIComponent(userEmail)}`);
 
         if (!response.ok) {
             const errorResponse = await response.json();
