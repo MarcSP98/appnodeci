@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGODB_URI || "mongodb+srv://msp98msp:mspolot98@my-cluster.ozuqhwl.mongodb.net/myDatabase?retryWrites=true&w=majority&appName=my-cluster";
 
 // Middleware CORS
+const cors = require('cors');
 app.use(cors());
 
 // Verifica si la variable MONGODB_URI está configurada
@@ -32,9 +33,6 @@ app.use(express.json());
 
 // Servir archivos estáticos
 app.use('/public', express.static(path.join(__dirname, 'public')));
-
-const cors = require('cors');
-app.use(cors());
 
 // Rutas
 const usersRouter = require('./routes/users');
