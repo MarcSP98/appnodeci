@@ -1,7 +1,14 @@
-const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-const API_URL = isLocalhost
-  ? "http://localhost:3000"
-  : window.location.origin;
+const API_URL = location.hostname === 'localhost' 
+  ? 'http://localhost:3000' 
+  : 'https://appnodedeploy-ee314911a96d.herokuapp.com';
+
+const response = await fetch(`${API_URL}/users/addUser`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(newUser),
+});
 class User {
     constructor(name, surname, email) {
         this.name = name;
