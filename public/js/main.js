@@ -1,6 +1,7 @@
-const API_URL = window.location.hostname.includes("localhost")
+const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+const API_URL = isLocalhost
   ? "http://localhost:3000"
-  : "https://appnodedeploy-ee314911a96d.herokuapp.com";
+  : window.location.origin;
 class User {
     constructor(name, surname, email) {
         this.name = name;
