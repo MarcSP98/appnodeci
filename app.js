@@ -5,10 +5,10 @@ const path = require('path');
 const app = express();
 
 // Puerto del servidor
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 // URL de conexión a MongoDB Atlas, usando variable de entorno MONGODB_URI si está configurada
-const MONGO_URI = process.env.MONGODB_URI || "mongodb+srv://msp98msp:mspolot98@my-cluster.ozuqhwl.mongodb.net/myDatabase?retryWrites=true&w=majority&appName=my-cluster";
+const MONGO_URI = process.env.MONGODB_URI;
 
 // Middleware CORS
 app.use(cors());
@@ -43,6 +43,6 @@ app.use((req, res, next) => {
 });
 
 // Iniciar el servidor
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, () => {
     console.log(`Servidor escuchando en http://localhost:${port}`);
 });
