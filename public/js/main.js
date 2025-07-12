@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:3000" || "https://appnodedeploy-ee314911a96d.herokuapp.com"
+const API_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://appnodedeploy-ee314911a96d.herokuapp.com";
 class User {
     constructor(name, surname, email) {
         this.name = name;
