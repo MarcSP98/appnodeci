@@ -33,6 +33,9 @@ app.use(express.json());
 // Servir archivos estáticos
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+const cors = require('cors');
+app.use(cors());
+
 // Rutas
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
