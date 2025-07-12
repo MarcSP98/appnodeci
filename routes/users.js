@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     try {
         res.sendFile(path.join(__dirname, '../public', 'index.html')); // Servir el archivo HTML
     } catch (err) {
-        console.error('Error al servir el archivo HTML:', err);
+        console.error('Error al servir archivo HTML:', err);
         res.status(500).json({ message: 'Error al cargar la página' });
     }
 });
