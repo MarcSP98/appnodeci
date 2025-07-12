@@ -1,35 +1,83 @@
-const API_URL = location.origin;
+// Configuració de l'API
+const isFile = location.protocol === 'file:';
+const isLocal = location.hostname === 'localhost' || isFile;
+const API_URL = isLocal ? 'http://localhost:3000' : location.origin;
 
+// Classe Usuari
 class User {
-  constructor(nombre, correo, contrasena) {
-    this.nombre = nombre;
-    this.correo = correo;
-    this.contrasena = contrasena;
+  constructor(name, surname, email) {
+    this.name = name;
+    this.surname = surname;
+    this.email = email;
   }
 }
 
-document.getElementById("registroForm").addEventListener("submit", async (event) => {
+// Afegir usuari
+async function addUser(event) {
   event.preventDefault();
 
-  const nombre = document.getElementById("nombre").value;
-  const correo = document.getElementById("correo").value;
-  const contrasena = document.getElementById("contrasena").value;
+  const name = document.getElementById("name").value.trim();
+  const surname = document.getElementById("surname").value.trim();
+  const email = document.getElementById("email").value.trim();
 
-  const newUser = new User(nombre, correo, contrasena);
+  if (!name || !surname || !email) {
+    alert("Por favor, completa todos los campos");
+    return;
+  }
+
+  const newUser = new User(name, surname, email);
 
   try {
     const response = await fetch(`${API_URL}/users/addUser`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newUser),
     });
 
-    const data = await response.json();
-    alert(data.message || "Usuario registrado con éxito.");
+    if (!response.ok) {
+      const { message } = await response.json();
+      throw new Error(message || `Error: ${response.status}`);
+    }
+
+    const result = await response.json();
+    alert('Usuario agregado correctamente');
+    console.log('Usuario agregado:', result);
+    document.getElementById("userForm").reset();
+
   } catch (error) {
-    console.error("Error al agregar el usuario:", error);
-    alert("Error al registrar el usuario. Revisa la consola.");
+    console.error('Error al agregar usuario:', error);
+    alert(`Error al agregar el usuario: ${error.message}`);
   }
-});
+}
+
+// Cercar usuari per email
+async function searchUserByEmail(event) {
+  event.preventDefault();
+
+  const userEmail = document.getElementById('userEmail').value.trim();
+  const infoElement = document.getElementById("formattedInfo");
+
+  if (!userEmail) {
+    alert("Por favor, ingresa un correo electrónico");
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/users/searchUserByEmail?userEmail=${encodeURIComponent(userEmail)}`);
+
+    if (!response.ok) {
+      const { message } = await response.json();
+      throw new Error(message || `Error: ${response.status}`);
+    }
+
+    const userData = await response.json();
+
+    infoElement.innerHTML = Object.entries(userData)
+      .map(([label, value]) => `<strong>${label}:</strong> ${value}`)
+      .join('<br>');
+
+  } catch (err) {
+    console.error('Error al buscar usuario:', err);
+    alert(`Error al buscar usuario: ${err.message}`);
+  }
+}

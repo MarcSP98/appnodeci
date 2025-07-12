@@ -43,6 +43,6 @@ app.use((req, res, next) => {
 });
 
 // Iniciar el servidor
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, () => {
     console.log(`Servidor escuchando en http://localhost:${port}`);
 });
