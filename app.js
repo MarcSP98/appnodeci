@@ -18,7 +18,6 @@ if (!MONGO_URI) {
     console.error('Error: La variable de entorno MONGODB_URI no está configurada.');
     process.exit(1); // Finaliza el proceso si no está configurada
 }
-console.log('MONGODB_URI:', MONGO_URI);
 
 // Conexión a MongoDB Atlas
 mongoose.connect(MONGO_URI)
@@ -45,5 +44,5 @@ app.use((req, res, next) => {
 
 // Iniciar el servidor
 app.listen(port, () => {
-    console.log(`Servidor escuchando en http://localhost:${port}`);
+    console.log(`Servidor escuchando en ${port}`);
 });
