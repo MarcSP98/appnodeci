@@ -1,5 +1,5 @@
 // Configuració de l'API només per producció
-const API_URL = 'https://appnodedeploy-ee314911a96d.herokuapp.com/public';
+const API_URL = 'https://appnodedeploy-ee314911a96d.herokuapp.com';
 
 // Classe Usuari
 class User {
