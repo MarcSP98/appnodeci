@@ -24,7 +24,7 @@ if (!MONGO_URI) {
 mongoose.connect(MONGO_URI)
     .then(() => console.log('Conectado a MongoDB Atlas'))
     .catch(err => {
-        console.error('Error al conectar a MongoDB:', err);
+        console.error('Error al conectar a  MongoDB:', err);
         process.exit(1); // Finaliza el proceso si no se puede conectar
     });
 
