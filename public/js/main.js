@@ -1,7 +1,5 @@
-// Configuració de l'API
-const isFile = location.protocol === 'file:';
-const isLocal = location.hostname === 'localhost' || isFile;
-const API_URL = isLocal ? 'http://localhost:3000' : location.origin;
+// Configuració de l'API només per producció
+const API_URL = 'https://appnodedeploy-ee314911a96d.herokuapp.com';
 
 // Classe Usuari
 class User {
