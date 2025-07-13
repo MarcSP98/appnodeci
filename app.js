@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
+require('dotenv').config();
 
 // Puerto del servidor
 const port = process.env.PORT;
